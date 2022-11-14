@@ -1,0 +1,75 @@
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import React from 'react';
+import {COLOR} from '../utility/Theme';
+//import Profile from '../components/Profile';
+import ModalPopup from './ModalPopUp';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
+const TopBar = ({menuPress}) => {
+  return (
+    <View style={styles.container}>
+      <View style={{paddingLeft: 20}}>
+        <TouchableOpacity
+          style={{
+            color: COLOR.DASHBOARDSCREEN_TOP_TEXT,
+          }}
+          onPress={menuPress}>
+          <Ionicons name="reorder-three-outline" size={35} />
+        </TouchableOpacity>
+      </View>
+      <View style={{paddingLeft: 15, paddingTop: 2}}>
+        <Text style={styles.title}>Search your notes</Text>
+      </View>
+      <View
+        style={{
+          paddingLeft: 25,
+          paddingTop: 5,
+        }}>
+        <TouchableOpacity
+          style={{
+            color: COLOR.DASHBOARDSCREEN_TOP_TEXT,
+          }}
+          onPress={() => {}}>
+          <Ionicons name="ios-grid-outline" size={25} />
+        </TouchableOpacity>
+      </View>
+      <View style={{paddingLeft: 2, marginBottom: -20}}>
+        <TouchableOpacity
+          style={{
+            marginRight: 15,
+            color: COLOR.DASHBOARDSCREEN_TOP_TEXT,
+            paddingTop: 12,
+            paddingLeft: 9,
+          }}
+          onPress={() => {}}>
+          <ModalPopup />
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
+};
+const styles = StyleSheet.create({
+  container: {
+    marginTop: 20,
+    height: 57,
+    paddingTop: 10,
+    paddingRight: 5,
+
+    flexDirection: 'row',
+    backgroundColor: COLOR.THIRD_COLOR,
+    borderRadius: 35,
+    // padding: 60,
+    paddingVertical: 12,
+  },
+  title: {
+    fontSize: 20,
+    width: 170,
+    color: COLOR.DASHBOARDSCREEN_TOP_TEXT,
+    paddingVertical: 2,
+    paddingLeft: -30,
+  },
+  profilelogo: {
+    marginLeft: 25,
+  },
+});
+export default TopBar;

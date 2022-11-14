@@ -1,12 +1,12 @@
 import {View, Text} from 'react-native';
 import React from 'react';
 
-const Dasboard = () => {
+const Setting = () => {
   return (
     <View>
-      <Text>Dasboard</Text>
+      <Text>Setting</Text>
     </View>
   );
 };
 
-export default Dasboard;
+export default Setting;

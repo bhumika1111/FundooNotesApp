@@ -1,23 +1,32 @@
 import {Text, View, StyleSheet, ScrollView} from 'react-native';
-import React from 'react';
+import React, {useState, useContext} from 'react';
 
 import CustomInput from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
-import {useNavigation} from '@react-navigation/native';
-import {useForm} from 'react-hook-form';
-
+//import {useNavigation} from '@react-navigation/native';
+import {AuthContext} from '../navigation/AuthProvider';
 const ForgotPassword = () => {
-  const {control, handleSubmit} = useForm();
-  const navigation = useNavigation();
+  console.log('forgot password', forgotpassword);
+  const [email, setEmail] = useState('');
+  const [error, setError] = useState('');
+  //const navigation = useNavigation();
+  const {forgotpassword} = useContext(AuthContext);
 
-  const onSendPressed = data => {
-    console.log(data);
-    navigation.navigate('NewPassword');
+  const onSendPressed = () => {
+    const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
+    const outputFields = {};
+
+    if (email === '' || !emailRegex.test(email)) {
+      outputFields.email = 'Please Enter A Valid Email!';
+      setError(outputFields);
+      return;
+    }
+    forgotpassword(email);
   };
 
   const onSignInPressed = () => {
     console.log('onSignInPressed');
-    navigation.navigate('SignIn');
+    // navigation.navigate('SignIn');
   };
 
   return (
@@ -25,14 +34,14 @@ const ForgotPassword = () => {
       <View style={styles.root}>
         <Text style={styles.title}>Reset your password</Text>
         <CustomInput
-          placeholder="Username"
-          name="userName"
-          control={control}
-          iconName="user"
-          rules={{required: 'Username is required!'}}
+          value={email}
+          setValue={setEmail}
+          placeholder="Email"
+          iconName="envelope-square"
+          error={error.email}
         />
 
-        <CustomButton text="Send" onPress={handleSubmit(onSendPressed)} />
+        <CustomButton text="Send" onPress={() => onSendPressed()} />
 
         <CustomButton text="Back to sign in" onPress={onSignInPressed} />
       </View>

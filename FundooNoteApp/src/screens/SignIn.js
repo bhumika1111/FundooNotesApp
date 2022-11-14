@@ -1,25 +1,44 @@
-import {Image, View, StyleSheet, ScrollView, Text} from 'react-native';
-import React from 'react';
+import {
+  Image,
+  View,
+  StyleSheet,
+  ScrollView,
+  Text,
+  Platform,
+} from 'react-native';
+import React, {useState, useContext} from 'react';
 import Logo from '../assets/images/Logo.png';
 import CustomInput from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
 import SocialSignInButton from '../components/SocialSignInButton';
+import {WIDTH} from '../utility/Theme';
+//import {useNavigation} from '@react-navigation/native';
+import {AuthContext} from '../navigation/AuthProvider';
 
-import {useNavigation} from '@react-navigation/native';
-import {useForm} from 'react-hook-form';
-import { WIDTH } from '../utility/Theme';
+const SignIn = ({navigation}) => {
+  //const navigation = useNavigation();
+  console.log('email', email);
+  console.log('password', password);
+  const {login, googleLogin} = useContext(AuthContext);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
-const SignIn = () => {
-  const navigation = useNavigation();
-  const {
-    control,
-    handleSubmit,
-    formState: {errors},
-  } = useForm();
-  console.log(errors);
-  const onSignInPressed = data => {
-    console.log(data);
-    navigation.navigate('Dashboard');
+  const onSignInPressed = () => {
+    // navigation.navigate('Dashboard');
+
+    const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
+    const passwordRegex = /^[a-zA-Z0-9!@#$%^&*]{8,32}$/;
+    const outputFields = {};
+    if (email === '' || !emailRegex.test(email)) {
+      outputFields.email = 'Please Enter A Valid Email!';
+    }
+    if (password === '' || !passwordRegex.test(password)) {
+      outputFields.password = 'Please Enter Min.8 and max.32 characters!';
+    } else {
+      login(email, password);
+    }
+    setError(outputFields);
   };
   const onForgotPasswordPressed = () => {
     console.log('onForgotPasswordPressed');
@@ -37,36 +56,40 @@ const SignIn = () => {
         <Text style={styles.text}>Fundoo Note</Text>
 
         <CustomInput
-          name="userName"
-          placeholder="UserName"
-          control={control}
-          rules={{required: 'Username is required!'}}
-          iconName="user"
+          value={email}
+          setValue={setEmail}
+          placeholder="Email"
+          iconName="envelope-square"
+          error={error.email}
         />
 
         <CustomInput
-          name="password"
+          value={password}
+          setValue={setPassword}
           placeholder="Password"
-          control={control}
-          secureTextEntry
           iconName="lock"
-          rules={{
-            required: 'Password is required!',
-            minLength: {
-              value: 3,
-              message: 'Password should be minimum 3 characters long!',
-            },
-          }}
+          error={error.password}
+          secureTextEntry={true}
         />
 
-        <CustomButton text="Sign In" onPress={handleSubmit(onSignInPressed)} />
+        <CustomButton text="Sign In" onPress={() => onSignInPressed()} />
         <CustomButton
           text="Forgot Password?"
           onPress={onForgotPasswordPressed}
           type="SECONDARY"
         />
 
-        <SocialSignInButton />
+        {Platform.OS === 'android' ? (
+          <>
+            <CustomButton
+              text="Sign In With Google"
+              bgColor="#FAE9EA"
+              fgColor="#ff4500"
+              onPress={() => googleLogin()}
+            />
+          </>
+        ) : null}
+
         <View>
           <Text style={{fontSize: 16, fontWeight: 'bold'}}>
             Don't have an account
@@ -91,7 +114,7 @@ const styles = StyleSheet.create({
     width: WIDTH.WIDTH,
     maxWidth: 300,
     height: 100,
-    marginBottom: 30,
+    // marginBottom: 30,
   },
   text: {
     color: '#dc143c',

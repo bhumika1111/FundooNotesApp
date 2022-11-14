@@ -1,8 +1,24 @@
 import {Text, StyleSheet, Pressable} from 'react-native';
 import React from 'react';
-import {COLOR} from '../utility/Theme';
+import {
+  ALIGNMENTITEM,
+  BORDERADIUS,
+  COLOR,
+  FONTSIZE,
+  FONTWEIGHT,
+  MARGINVERTICAL,
+  PADDING,
+  WIDTH,
+} from '../utility/Theme';
 
-const CustomButton = ({onPress, text, type = 'PRIMARY', bgColor, fgColor}) => {
+const CustomButton = ({
+  onPress,
+  text,
+  type = 'PRIMARY',
+  bgColor,
+  fgColor,
+  children,
+}) => {
   return (
     <Pressable
       onPress={onPress}
@@ -17,37 +33,37 @@ const CustomButton = ({onPress, text, type = 'PRIMARY', bgColor, fgColor}) => {
           styles[`text_${type}`],
           fgColor ? {color: fgColor} : {},
         ]}>
-        {text}
+        {children || text}
       </Text>
     </Pressable>
   );
 };
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
-    padding: 15,
-    marginVertical: 6,
-    alignItems: 'center',
-    borderRadius: 10,
+    width: WIDTH.WIDTH_TWO,
+    padding: PADDING.PADDING_FIRST,
+    marginVertical: MARGINVERTICAL.VERTICAL_FIRST,
+    alignItems: ALIGNMENTITEM.ITEM_FIRST,
+    borderRadius: BORDERADIUS.RADIUS_FIRST,
   },
   container_PRIMARY: {
     backgroundColor: COLOR.PRIMARY_COLOR,
   },
   container_SECONDARY: {
-    borderColor: '#3B71F3',
+    borderColor: COLOR.SECONDARY_COLOR,
   },
 
   text: {
-    fontWeight: 'bold',
-    color: 'white',
-    fontSize: 16,
+    fontWeight: FONTWEIGHT.WEIGHT_FIRST,
+    color: COLOR.SECONDARY_COLOR,
+    fontSize: FONTSIZE.SIZE_FIRST,
   },
   text_SECONDARY: {
-    color: '#3B71F3',
+    color: COLOR.LINK_COLOR,
   },
   text_TERTIARY: {
-    fontWeight: 'bold',
-    color: 'gray',
+    fontWeight: FONTWEIGHT.WEIGHT_FIRST,
+    color: COLOR.TEXT_TERITIARY_COLOR,
   },
 });
 export default CustomButton;

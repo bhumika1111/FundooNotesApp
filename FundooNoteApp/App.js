@@ -1,14 +1,19 @@
-import {SafeAreaView, StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
 import React from 'react';
+import 'react-native-gesture-handler';
 
-import Navigation from './src/Navigation';
+import {AuthProvider} from './src/navigation/AuthProvider';
+
+import Navigation from './src/navigation/Navigation';
+
 const App = () => {
   return (
-    <SafeAreaView style={styles.root}>
+    <AuthProvider>
       <Navigation />
-    </SafeAreaView>
+    </AuthProvider>
   );
 };
+
 const styles = StyleSheet.create({
   root: {
     flex: 1,

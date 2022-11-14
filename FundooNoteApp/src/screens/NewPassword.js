@@ -1,16 +1,31 @@
 import {Text, View, StyleSheet, ScrollView} from 'react-native';
-import React from 'react';
+import React, {useState, useContext} from 'react';
 
 import CustomInput from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
 import {useNavigation} from '@react-navigation/native';
-import {useForm} from 'react-hook-form';
-const NewPassword = () => {
-  const {control, handleSubmit} = useForm();
-  const navigation = useNavigation();
-  const onSubmitPressed = data => {
-    console.log(data);
-    navigation.navigate('Home');
+import {AuthContext} from '../navigation/AuthProvider';
+const NewPassword = ({navigation}) => {
+  const [code, setCode] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [error, setError] = useState('');
+
+  // const navigation = useNavigation();
+  const onSubmitPressed = () => {
+    const passwordRegex = /^[a-zA-Z0-9!@#$%^&*]{8,32}$/;
+    const outputFields = {};
+    if (code === '') {
+      outputFields.code = 'Please Enter The Verification Code!';
+    }
+    if (newPassword === '' || !passwordRegex.test(newPassword)) {
+      outputFields.newPassword = 'Please Enter Min.8 and Max.32 Characters!';
+    }
+    if (newPassword !== '' || confirmPassword) {
+      outputFields.confirmPassword = 'Password Not Matched!';
+    }
+    //navigation.navigate('Home');
+    setError(outputFields);
   };
 
   const onSignInPressed = () => {
@@ -23,28 +38,29 @@ const NewPassword = () => {
       <View style={styles.root}>
         <Text style={styles.title}>Reset your password</Text>
         <CustomInput
-          placeholder="Code"
-          name="code"
-          control={control}
-          iconName="code"
-          rules={{required: 'Code is required!'}}
+          value={code}
+          setValue={setCode}
+          placeholder="Enter your code"
+          iconName="lock"
+          error={error.code}
         />
         <CustomInput
+          value={newPassword}
+          setValue={setNewPassword}
           placeholder="Enter your new password"
-          name="password"
-          control={control}
-          iconName="eye"
-          secureTextEntry
-          rules={{
-            required: 'Password is required!',
-            minLength: {
-              value: 8,
-              message: 'Password should be at least 8 characters long',
-            },
-          }}
+          iconName="lock"
+          error={error.newPassword}
+        />
+        <CustomInput
+          value={confirmPassword}
+          setValue={setConfirmPassword}
+          placeholder="Confirm Password"
+          iconName="lock"
+          error={error.confirmPassword}
+          secureTextEntry={true}
         />
 
-        <CustomButton text="Submit" onPress={handleSubmit(onSubmitPressed)} />
+        <CustomButton text="Submit" onPress={onSubmitPressed} />
 
         <CustomButton text="Back to sign in" onPress={onSignInPressed} />
       </View>
