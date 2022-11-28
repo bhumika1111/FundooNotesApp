@@ -1,5 +1,5 @@
 package com.fundoonoteapp;
-
+// import androidx.multidex.MultiDexApplication; // <-- ADD THIS IMPORT
 import android.app.Application;
 import android.content.Context;
 import com.facebook.react.PackageList;
@@ -14,6 +14,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 public class MainApplication extends Application implements ReactApplication {
+
+// // Your class definition needs `extends MultiDexApplication` like below
+// public class MainApplication extends MultiDexApplication implements ReactApplication {
 
   private final ReactNativeHost mReactNativeHost =
       new ReactNativeHost(this) {

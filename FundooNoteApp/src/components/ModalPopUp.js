@@ -5,7 +5,7 @@ import {AuthContext} from '../navigation/AuthProvider';
 
 const ModalPopup = () => {
   const [modalVisible, setModalVisible] = useState(false);
-  const {logout} = useContext(AuthContext);
+  const {logout, user} = useContext(AuthContext);
   return (
     <View style={styles.centeredView}>
       <Modal
@@ -19,6 +19,7 @@ const ModalPopup = () => {
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <Text style={styles.modalText}>Signout from fundoo notes!</Text>
+            <Text style={styles.text}>{user.email}</Text>
             <Pressable
               style={[styles.button, styles.buttonClose]}
               onPress={() => logout()}>
@@ -47,7 +48,7 @@ const styles = StyleSheet.create({
     margin: 20,
     backgroundColor: 'white',
     borderRadius: 20,
-    padding: 35,
+    padding: 100,
     alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: {
@@ -56,7 +57,7 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 4,
-    elevation: 5,
+    elevation: 25,
   },
   button: {
     borderRadius: 20,
@@ -86,6 +87,8 @@ const styles = StyleSheet.create({
   modalText: {
     marginBottom: 15,
     textAlign: 'center',
+    fontWeight: 'bold',
+    fontSize:20,
   },
 });
 

@@ -1,3 +1,4 @@
+import firestore from '@react-native-firebase/firestore';
 import React, {createContext, useState} from 'react';
 import auth from '@react-native-firebase/auth';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
@@ -5,6 +6,7 @@ import {GoogleSignin} from '@react-native-google-signin/google-signin';
 export const AuthContext = createContext();
 export const AuthProvider = ({children}) => {
   const [user, setUser] = useState(null);
+  const usersCollection = firestore().collection('UserData');
   return (
     <AuthContext.Provider
       value={{
@@ -41,33 +43,20 @@ export const AuthProvider = ({children}) => {
             console.log(e);
           }
         },
-        register: async (email, password) => {
+        register: async (email, password, firstname, lastname) => {
           try {
-            await auth()
-              .createUserWithEmailAndPassword(email, password)
+            const userDetails = await auth().createUserWithEmailAndPassword(
+              email,
+              password,
+            );
 
-              .then(() => {
-                console.log('User account created & signed in!');
-              })
-              .catch(error => {
-                if (error.code === 'auth/email-already-in-use') {
-                  console.log('That email address is already in use!');
-                }
+            usersCollection
+              .doc(userDetails.user.uid)
+              .set({email: email, firstname: firstname, lastname: lastname});
 
-                if (error.code === 'auth/invalid-email') {
-                  console.log('That email address is invalid!');
-                }
+            console.log('User account created & signed in!');
 
-                if (error.code === 'auth/wrong-password') {
-                  console.log('Password is invalid!');
-                }
-
-                if (error.code === 'auth/user-not-found') {
-                  console.log('user not Exist');
-                }
-
-                console.error(error);
-              });
+            console.log(userDetails);
           } catch (e) {
             console.log(e);
           }

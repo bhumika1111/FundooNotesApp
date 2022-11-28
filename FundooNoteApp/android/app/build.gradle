@@ -143,7 +143,7 @@ android {
         versionName "1.0"
         buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
           vectorDrawables.useSupportLibrary = true
-
+        // multiDexEnabled true // <-- ADD THIS in the defaultConfig section(yesterday added 15/11)
         if (isNewArchitectureEnabled()) {
             // We configure the CMake build only if you decide to opt-in for the New Architecture.
             externalNativeBuild {
@@ -251,16 +251,18 @@ android {
 }
 
 dependencies {
+    //implementation project(':@react-native-firebase_firestore') 
     implementation fileTree(dir: "libs", include: ["*.jar"])
 
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
 
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
-
+ 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
         exclude group:'com.facebook.fbjni'
-        
+    //    implementation 'androidx.multidex:multidex:2.0.1'  // <-- ADD THIS DEPENDENCY(yesterday added 15/11)
+     
     }
 
     debugImplementation("com.facebook.flipper:flipper-network-plugin:${FLIPPER_VERSION}") {

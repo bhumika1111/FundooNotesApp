@@ -1,4 +1,4 @@
-import {TouchableOpacity, Text, StyleSheet,View} from 'react-native';
+import {TouchableOpacity, Text, StyleSheet, View} from 'react-native';
 import React from 'react';
 //import CustomButton from './CustomButton';
 
@@ -12,8 +12,11 @@ const SocialSignInButton = ({onPress, text, bgColor, fgColor}) => {
         style={[
           StyleSheet.container,
           bgColor ? {backgroundColor: bgColor} : {},
-        ]}/>
-      <Text style={[styles.textwrite, fgColor ? {color: fgColor} : {}]}>{text}</Text>
+        ]}
+      />
+      <Text style={[styles.textwrite, fgColor ? {color: fgColor} : {}]}>
+        {text}
+      </Text>
     </TouchableOpacity>
   );
 };
@@ -23,11 +26,9 @@ const styles = StyleSheet.create({
     padding: 15,
     alignItems: 'center',
     borderRadius: 5,
-   // backgroundColor: 'blue',
   },
-  textwrite:{
-    fontWeight:'bold',
-
-  }
+  textwrite: {
+    fontWeight: 'bold',
+  },
 });
 export default SocialSignInButton;

@@ -50,7 +50,7 @@ const SignUp = ({navigation}) => {
     } else if (password !== passwordRepeat) {
       outputFields.passwordRepeat = 'Please! Enter The Correct Password';
     } else if (password === passwordRepeat) {
-      register(email, password);
+      register(email, password,firstName,lastName);
     }
 
     setError(outputFields);
