@@ -2,9 +2,11 @@ import {View, Text, StyleSheet} from 'react-native';
 import React from 'react';
 import {COLOR} from '../utility/Theme';
 
-
 const Notecard = props => {
-  console.log(props);
+  if (props.pinData) {
+    console.log('item is:', props);
+  }
+
   return (
     <View style={styles.container}>
       <View>

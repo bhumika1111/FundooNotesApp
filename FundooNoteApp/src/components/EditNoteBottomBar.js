@@ -1,22 +1,14 @@
 import React, {useState} from 'react';
-import {
-  View,
-  TouchableOpacity,
-  StyleSheet,
-  Text,
-  Modal,
-  Pressable,
-} from 'react-native';
+import {View, TouchableOpacity, StyleSheet, Text, Modal} from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import {deleteNote} from '../services/FirebaseNoteService.js';
 
-const EditNoteBottomBar = noteId => {
+const EditNoteBottomBar = ({deleteData, setDeleteData}) => {
   const [modalVisible, setModalVisible] = useState(false);
-  console.log('++++++', noteId);
+
   return (
     <View style={styles.header}>
       <View style={styles.square}>
@@ -47,12 +39,15 @@ const EditNoteBottomBar = noteId => {
         }}>
         <View style={styles.modalcontainer}>
           <View style={styles.modalbackground}>
-            <TouchableOpacity onPress={()=>deleteNote()}>
-            <Text style={styles.del}>
-              <AntDesign name="delete" size={22} /> Delete
-            </Text>
+            <TouchableOpacity
+              onPress={() => {
+                setDeleteData(!deleteData);
+                setModalVisible(!modalVisible);
+              }}>
+              <Text style={styles.del}>
+                <AntDesign name="delete" size={22} /> Delete
+              </Text>
             </TouchableOpacity>
-
           </View>
         </View>
       </Modal>

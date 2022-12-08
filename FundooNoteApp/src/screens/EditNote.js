@@ -5,31 +5,79 @@ import EditNoteBottomBar from '../components/EditNoteBottomBar';
 import {TextInput} from 'react-native-gesture-handler';
 import {addNote, updateNote, deleteNote} from '../services/FirebaseNoteService';
 import {AuthContext} from '../navigation/AuthProvider';
-
+import ArchieveTopBar from '../components/ArchieveTopBar';
+import Search from '../screens/Search';
 const EditNote = ({navigation, route}) => {
   const noteData = route.params;
 
-  const [isDeleted, setIsDeleted] = useState(noteData?.isDeleted || false);
+  const [deleteData, setdeleteData] = useState(noteData?.isDeleted || false);
   const [title, setTitle] = useState(noteData?.title || ''); //opetionalchaninging
   const [note, setNote] = useState(noteData?.note || '');
-  const [pinData, setIspinData] = useState(noteData?.pinData || '');
+  const [pinData, setPinData] = useState(noteData?.pinData || false);
+  const [archieveData, setIsarchieveData] = useState(
+    noteData?.archieveData || false,
+  );
+  const [reminderData, setReminderData] = useState(
+    noteData?.reminderData || '',
+  );
   const {user} = useContext(AuthContext);
   const onBackPress = async () => {
-    let userId = user.uid;
+    const userId = user.uid;
     if (noteData.noteId) {
-      await updateNote(title, note, noteData.noteId, userId);
+      await updateNote(
+        title,
+        note,
+        noteData.noteId,
+        userId,
+        pinData,
+        archieveData,
+        deleteData,
+        reminderData,
+      );
     } else {
-      await addNote(title, note, userId);
+      await addNote(
+        title,
+        note,
+        userId,
+        pinData,
+        archieveData,
+        deleteData,
+        reminderData,
+      );
     }
     navigation.goBack();
   };
-  const onDeleteHandle = () => {
-    setIsDeleted(!isDeleted);
+  const onDeleteHandle = async () => {
+    const userId = user.uid;
+    await updateNote(
+      title,
+      note,
+      noteData.noteId,
+      userId,
+      pinData,
+      archieveData,
+      deleteData,
+      reminderData,
+    );
+  };
+  const onPinHandle = () => {
+    setPinData(!pinData);
+  };
+  const onArchieveHandle = () => {
+    setIsarchieveData(!archieveData);
   };
   return (
     <View>
       <View>
-        <EditNoteTopBar onBackPress={onBackPress} />
+        <EditNoteTopBar
+          onBackPress={onBackPress}
+          pinData={pinData}
+          archieveData={archieveData}
+          deleteData={deleteData}
+          onPinHandle={onPinHandle}
+          onDeleteHandle={onDeleteHandle}
+          onArchieveHandle={onArchieveHandle}
+        />
       </View>
       <View style={styles.notestyle}>
         <TextInput
@@ -47,8 +95,15 @@ const EditNote = ({navigation, route}) => {
         />
       </View>
       <View>
-        <EditNoteBottomBar isDeleted={isDeleted} noteId={noteData.noteId} />
+        <EditNoteBottomBar
+          deleteData={deleteData}
+          setDeleteData={setdeleteData}
+        />
       </View>
+      <ArchieveTopBar
+        archieveData={archieveData}
+        setIsarchieveData={setIsarchieveData}
+      />
     </View>
   );
 };

@@ -1,28 +1,33 @@
 import React from 'react';
 import {View, TouchableOpacity, StyleSheet} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import {useNavigation} from '@react-navigation/native';
-import { deleteNote } from '../services/FirebaseNoteService';
-const EditNoteTopBar = ({onBackPress}) => {
-  const navigation = useNavigation();
+import AntDesign from 'react-native-vector-icons/AntDesign';
+
+const EditNoteTopBar = ({
+  onBackPress,
+  pinData,
+  archieveData,
+  deleteData,
+  onPinHandle,
+  onDeleteHandle,
+  onArchieveHandle,
+}) => {
   return (
     <View style={styles.header}>
-      <TouchableOpacity onPress={onBackPress}>
+      <TouchableOpacity onPress={() => onBackPress(pinData, deleteData)}>
         <Ionicons name="ios-arrow-back-outline" size={26} />
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => {}} style={styles.pushPin}>
-        <MaterialIcons name="push-pin" size={26} />
+      <TouchableOpacity onPress={() => onPinHandle()} style={styles.pushPin}>
+        <AntDesign name={pinData ? 'pushpin' : 'pushpino'} size={26} />
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.bellIcon} onPress={() => {}}>
-        {/* <BellPopup /> */}
         <Ionicons name="notifications-outline" size={26} />
       </TouchableOpacity>
 
       <TouchableOpacity
-        onPress={() => navigation.navigate('Notes')}
+        onPress={() => onArchieveHandle()}
         style={styles.bellIcon}>
         <Ionicons name="archive-outline" size={24} />
       </TouchableOpacity>
@@ -45,5 +50,6 @@ const styles = StyleSheet.create({
   pushPin: {
     marginLeft: 170,
     padding: 6,
+    transform: [{rotate: '45deg'}],
   },
 });

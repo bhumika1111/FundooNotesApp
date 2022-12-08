@@ -1,4 +1,4 @@
-/* eslint-disable no-unused-vars */
+
 import React, {useContext} from 'react';
 import firestore from '@react-native-firebase/firestore';
 import {AuthContext} from '../navigation/AuthProvider';
@@ -13,21 +13,16 @@ export const addNote = async (
   archieveData,
   deleteData,
   reminderData,
-  labelData,
 ) => {
   try {
-    await db
-      .doc(userId)
-      .collection('NoteData')
-      .add({
-        title: title,
-        note: note,
-        pinData: pinData,
-        archieveData: archieveData,
-        deleteData: deleteData,
-        reminderData: reminderData,
-        labelData: labelData,
-      });
+    await db.doc(userId).collection('NoteData').add({
+      title: title,
+      note: note,
+      pinData: pinData,
+      archieveData: archieveData,
+      deleteData: deleteData,
+      reminderData: reminderData,
+    });
   } catch (error) {
     console.log(error);
   }
@@ -52,13 +47,29 @@ export const fetchingNote = async userId => {
     console.log(error);
   }
 };
-export const updateNote = async (title, note, noteId, userId) => {
+export const updateNote = async (
+  title,
+  note,
+  noteId,
+  userId,
+  pinData,
+  archieveData,
+  deleteData,
+  reminderData,
+) => {
   try {
     await db
       .doc(userId)
       .collection('NoteData')
       .doc(noteId)
-      .update({note: note, title: title})
+      .update({
+        note: note,
+        title: title,
+        pinData: pinData,
+        archieveData: archieveData,
+        deleteData: deleteData,
+        reminderData: reminderData,
+      })
       .then(() => {
         console.log('User updated!');
       });

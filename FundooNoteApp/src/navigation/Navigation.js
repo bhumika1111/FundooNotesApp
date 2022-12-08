@@ -27,9 +27,11 @@ const Navigation = () => {
     return null;
   }
   return (
-    <NavigationContainer>
-      {!user ? <AuthStack /> : <AppStack />}
-    </NavigationContainer>
+    
+      <NavigationContainer>
+        {!user ? <AuthStack /> : <AppStack />}
+      </NavigationContainer>
+  
   );
 };
 

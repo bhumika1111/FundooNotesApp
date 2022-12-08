@@ -4,8 +4,9 @@ import {COLOR} from '../utility/Theme';
 //import Profile from '../components/Profile';
 import ModalPopup from './ModalPopUp';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const TopBar = ({menuPress}) => {
+const TopBar = ({menuPress, changeLayout, layout, navigation}) => {
   return (
     <View style={styles.container}>
       <View style={{paddingLeft: 20}}>
@@ -17,9 +18,14 @@ const TopBar = ({menuPress}) => {
           <Ionicons name="reorder-three-outline" size={35} />
         </TouchableOpacity>
       </View>
-      <View style={{paddingLeft: 15, paddingTop: 2}}>
+
+      <TouchableOpacity
+        style={{paddingLeft: 15, paddingTop: 2}}
+        onPress={() => navigation.navigate('Search')}>
         <Text style={styles.title}>Search your notes</Text>
-      </View>
+        {/* <Search noteData={noteData} /> */}
+      </TouchableOpacity>
+
       <View
         style={{
           paddingLeft: 25,
@@ -29,8 +35,11 @@ const TopBar = ({menuPress}) => {
           style={{
             color: COLOR.DASHBOARDSCREEN_TOP_TEXT,
           }}
-          onPress={() => {}}>
-          <Ionicons name="ios-grid-outline" size={25} />
+          onPress={() => changeLayout()}>
+          <MaterialCommunityIcons
+            name={layout ? 'view-grid-outline' : 'view-agenda-outline'}
+            size={28}
+          />
         </TouchableOpacity>
       </View>
       <View style={{paddingLeft: 2, marginBottom: -20}}>
