@@ -3,7 +3,7 @@ export const COLOR = {
   BACKGROUND_COLOR: 'rgba(220, 20, 60, 0.8)',
   SECONDARY_COLOR: '#fff',
   THIRD_COLOR: '#e8cad0',
-
+  SPLASH_COLOR: 'rgba(115, 86, 49,0.8)',
   DASHBOARDSCREEN_TOP: 'rgba(169,169,169,0.1)',
   DASHBOARDSCREEN_TOP_TEXT: 'rgba(0,0,0,0.7)',
   BORDER_COLOR: 'black',

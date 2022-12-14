@@ -5,6 +5,7 @@ import auth from '@react-native-firebase/auth';
 import {AuthContext} from './AuthProvider';
 import AppStack from './AppStack';
 import AuthStack from './AuthStack';
+import Splash from '../components/Splash';
 
 const Navigation = () => {
   //****Set an initializing state whilst Firebase connects ******/
@@ -13,10 +14,8 @@ const Navigation = () => {
   //****** Handle user state changes*******/
   const onAuthStateChanged = user => {
     setUser(user);
-
-    if (initializing) {
-      setInitializing(false);
-    }
+setTimeout(()=>{setInitializing(false)},2000)
+   
   };
   useEffect(() => {
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
@@ -24,14 +23,14 @@ const Navigation = () => {
   }, []);
 
   if (initializing) {
-    return null;
+    return <Splash/>; //splash
   }
   return (
     
       <NavigationContainer>
         {!user ? <AuthStack /> : <AppStack />}
       </NavigationContainer>
-  
+
   );
 };
 

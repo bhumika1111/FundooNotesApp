@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {View, TouchableOpacity, StyleSheet, Text, Modal} from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
-
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -44,9 +44,16 @@ const EditNoteBottomBar = ({deleteData, setDeleteData}) => {
                 setDeleteData(!deleteData);
                 setModalVisible(!modalVisible);
               }}>
-              <Text style={styles.del}>
-                <AntDesign name="delete" size={22} /> Delete
-              </Text>
+              <View style={{flexDirection: 'row'}}>
+                <AntDesign name="delete" size={22}/>
+                <Text style={styles.del}> Delete</Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => {}}>
+            <View style={{flexDirection: 'row',paddingTop:20}}>
+                <MaterialIcons name="label-outline" size={22}  />
+                <Text style={styles.del}> Label</Text>
+              </View>
             </TouchableOpacity>
           </View>
         </View>
@@ -96,5 +103,8 @@ const styles = StyleSheet.create({
   del: {
     paddingLeft: 10,
     fontSize: 20,
+    alignContent: 'space-between',
+    marginLeft: 10,
   },
+  
 });

@@ -8,6 +8,7 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 const CustomDrawer = ({props, navigation}) => {
+ // const [color,setColor]=useState('')
   return (
     <View style={{flex: 1}}>
       <DrawerContentScrollView {...props}>

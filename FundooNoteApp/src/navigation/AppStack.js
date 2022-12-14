@@ -1,8 +1,9 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import DrawerNavigation from './DrawerNavigation';
 import EditNote from '../screens/EditNote';
 import Search from '../screens/Search';
+
 const Stack = createNativeStackNavigator();
 
 const AppStack = () => {

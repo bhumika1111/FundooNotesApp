@@ -5,10 +5,11 @@ import FontAwsome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
 import {COLOR} from '../utility/Theme';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-
+import {useSelector, useDispatch} from 'react-redux';
 const ArchieveTopBar = ({menuPress, changeLayout, layout}) => {
   const navigation = useNavigation();
-
+  const toggle= useSelector(state => state.toggle);
+  const dispatch = useDispatch();
   return (
     <View style={styles.container}>
       <View style={styles.inputContainer}>
@@ -34,9 +35,9 @@ const ArchieveTopBar = ({menuPress, changeLayout, layout}) => {
           </TouchableOpacity>
         </View>
         <View style={styles.grid}>
-          <TouchableOpacity onPress={() => changeLayout()}>
+          <TouchableOpacity    onPress={() => dispatch({type: 'TOGGLE'})}>
             <MaterialCommunityIcons
-              name={layout ?  'view-agenda-outline' : 'view-grid-outline' }
+              name={toggle   ?  'view-agenda-outline' : 'view-grid-outline' }
               size={28}
             />
           </TouchableOpacity>

@@ -6,7 +6,11 @@ import ModalPopup from './ModalPopUp';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const TopBar = ({menuPress, changeLayout, layout, navigation}) => {
+
+import {useSelector, useDispatch} from 'react-redux';
+const TopBar = ({menuPress, navigation}) => {
+  const toggle= useSelector( state => state.toggle);
+  const dispatch = useDispatch();
   return (
     <View style={styles.container}>
       <View style={{paddingLeft: 20}}>
@@ -23,7 +27,6 @@ const TopBar = ({menuPress, changeLayout, layout, navigation}) => {
         style={{paddingLeft: 15, paddingTop: 2}}
         onPress={() => navigation.navigate('Search')}>
         <Text style={styles.title}>Search your notes</Text>
-        {/* <Search noteData={noteData} /> */}
       </TouchableOpacity>
 
       <View
@@ -35,9 +38,9 @@ const TopBar = ({menuPress, changeLayout, layout, navigation}) => {
           style={{
             color: COLOR.DASHBOARDSCREEN_TOP_TEXT,
           }}
-          onPress={() => changeLayout()}>
+          onPress={() => dispatch({type: 'TOGGLE'})}>
           <MaterialCommunityIcons
-            name={layout ? 'view-grid-outline' : 'view-agenda-outline'}
+            name={toggle ? 'view-grid-outline' : 'view-agenda-outline'}
             size={28}
           />
         </TouchableOpacity>

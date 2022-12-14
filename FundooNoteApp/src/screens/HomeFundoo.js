@@ -12,12 +12,15 @@ import BottomBar from '../components/BottomBar';
 import {AuthContext} from '../navigation/AuthProvider';
 import Notecard from '../components/Notecard';
 import {fetchingNote} from '../services/FirebaseNoteService';
+import {useSelector} from 'react-redux';
+
 const HomeFundoo = ({navigation}) => {
+  
   const {user} = useContext(AuthContext);
+
   const [pinnedNotes, setPinnedNotes] = useState([]);
   const [noteData, setNoteData] = useState([]);
-  const [layout, setLayout] = useState(false);
-  console.log('^^^^^^^^^^^^^^', noteData);
+   const toggle = useSelector((state)=> state.toggle);
   const getData = async () => {
     const result = await fetchingNote(user.uid);
     let pinnedData = [];
@@ -35,8 +38,6 @@ const HomeFundoo = ({navigation}) => {
     setNoteData(otherData);
   };
 
-  console.log('****', noteData);
-
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       getData();
@@ -44,9 +45,9 @@ const HomeFundoo = ({navigation}) => {
     return unsubscribe;
   }, []);
 
-  const changeLayout = () => {
-    setLayout(!layout);
-  };
+  // const changeLayout = () => {
+  //   setLayout(!layout);
+  // };
 
   // eslint-disable-next-line no-shadow
   const sections = [
@@ -58,22 +59,20 @@ const HomeFundoo = ({navigation}) => {
     return (
       <FlatList
         data={item.list}
-        // eslint-disable-next-line no-shadow
         renderItem={({item}) => (
           <TouchableOpacity
-            style={layout ? styles.grid : styles.list}
+            style={toggle ? styles.grid : styles.list}
             onPress={() => navigation.navigate('EditNote', {...item})}>
-            <Notecard {...item} layout={layout} />
+            <Notecard {...item}  />
           </TouchableOpacity>
         )}
-        // eslint-disable-next-line no-shadow
         keyExtractor={item => item.noteId}
-        numColumns={layout ? 2 : 1}
-        key={layout ? 2 : 1}
+        numColumns={toggle ? 2 : 1}
+        key={toggle ? 2 : 1}
       />
     );
   };
-  // eslint-disable-next-line no-shadow
+
   const renderSectionHeader = ({section}) => {
     if (pinnedNotes?.length) {
       return (
@@ -88,10 +87,8 @@ const HomeFundoo = ({navigation}) => {
       <View>
         <TopBar
           menuPress={() => navigation.toggleDrawer()}
-          changeLayout={changeLayout}
-          layout={layout}
           navigation={navigation}
-          
+          toggle={toggle}
         />
       </View>
       <SectionList

@@ -6,10 +6,12 @@ import { AuthContext } from '../navigation/AuthProvider';
 import { fetchingNote } from '../services/FirebaseNoteService';
 
 
+import {useSelector, useDispatch} from 'react-redux';
 const Trash = ({menuPress, navigation}) => {
   const {user} = useContext(AuthContext);
   const [noteData, setNoteData] = useState([]);
-
+  const toggle= useSelector(state => state.toggle);
+  const dispatch = useDispatch();
   const getData = async () => {
     const notes = await fetchingNote(user.uid);
     let archieveData = [];
@@ -40,7 +42,7 @@ const Trash = ({menuPress, navigation}) => {
         <FlatList
           data={noteData}
           renderItem={({item}) => (
-            <TouchableOpacity onPress={{}}>
+            <TouchableOpacity   onPress={() => dispatch({type: 'TOGGLE'})}>
               <Notecard {...item} />
             </TouchableOpacity>
           )}
