@@ -1,12 +1,12 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 
-const LabelView = () => {
+const ChipCard = () => {
   return (
     <View>
-      <Text>LabelView</Text>
+      <Text>ChipCard</Text>
     </View>
   )
 }
 
-export default LabelView
+export default ChipCard

@@ -35,7 +35,7 @@ export const fetchinglabelData = async userId => {
   }
 };
 
-export const updateLabel = async (labelName,labelId) => {
+export const updateLabel = async (labelName,userId,labelId) => {
   try {
     await db
       .doc(userId)
@@ -48,20 +48,20 @@ export const updateLabel = async (labelName,labelId) => {
         console.log('User updated!');
       });
   } catch (error) {
-    console.log("&&&&&~~~~~~",error);
+    console.log(error);
   }
 };
-// export const deleteNote = async (noteId, userId) => {
-//   try {
-//     await db
-//       .doc(userId)
-//       .collection('NoteData')
-//       .doc(noteId)
-//       .delete()
-//       .then(() => {
-//         console.log('User deleted!');
-//       });
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
+export const deletelabel = async (labelId, userId) => {
+  try {
+    await db
+      .doc(userId)
+      .collection('labelData')
+      .doc(labelId)
+      .delete()
+      .then(() => {
+        console.log('User deleted!');
+      });
+  } catch (error) {
+    console.log(error);
+  }
+ };

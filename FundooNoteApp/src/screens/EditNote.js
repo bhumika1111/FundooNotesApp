@@ -98,6 +98,7 @@ const EditNote = ({navigation, route}) => {
         <EditNoteBottomBar
           deleteData={deleteData}
           setDeleteData={setdeleteData}
+          navigation={navigation}
         />
       </View>
       <ArchieveTopBar

@@ -14,24 +14,33 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import Feather from 'react-native-vector-icons/Feather';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {AuthContext} from '../navigation/AuthProvider';
-import {addLabel, fetchinglabelData} from '../services/FirebaseLabelServices';
+import {
+  addLabel,
+  fetchinglabelData,
+  
+} from '../services/FirebaseLabelServices';
 import LabelCard from '../components/Labels/LabelCard';
 
-const CreateNewLabel = () => {
+
+
+const CreateNewLabel = route => {
+  
+
   const {user} = useContext(AuthContext);
   const navigation = useNavigation();
   const [label, setLabel] = useState('');
   const [cross, setCross] = useState(false);
   const [save, setsave] = useState(false);
   const [labelData, setLabelData] = useState([]);
-  const userId = user.uid;
 
-  const onSavePress = () => {
+  const onSavePress = async () => {
+    const userId = user.uid;
     if (label !== '') {
-      addLabel(userId, label);
+      await addLabel(userId, label);
       setLabel('');
     }
   };
+
   const getData = async () => {
     const result = await fetchinglabelData(user.uid);
     setLabelData(result);
@@ -45,20 +54,21 @@ const CreateNewLabel = () => {
   return (
     <View style={styles.container}>
       <View style={styles.arrow}>
-        <Ionicons
-          name="ios-arrow-back-outline"
-          size={26}
-          color={'black'}
-          onPress={() => navigation.goBack()}
-        />
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Ionicons name="ios-arrow-back-outline" size={26} color={'black'} />
+        </TouchableOpacity>
 
         <View>
           <Text style={styles.text}>Edit Labels</Text>
+         
         </View>
       </View>
       <View>
         <View
-          style={[styles.crossIcon, {borderColor: cross ? 'gray' : COLOR.THIRD_COLOR}]}>
+          style={[
+            styles.crossIcon,
+            {borderColor: cross ? 'gray' : COLOR.THIRD_COLOR},
+          ]}>
           {cross ? (
             <Entypo
               name="cross"
@@ -89,30 +99,33 @@ const CreateNewLabel = () => {
             onChangeText={content => setLabel(content)}
           />
           <View>
-            <MaterialIcons
-              style={styles.doneIcon}
-              name="done"
-              size={26}
-              color="black"
-              onPress={() => onSavePress()}
-            />
+            {save ? (
+              <MaterialIcons
+                style={styles.doneIcon}
+                name="done"
+                size={26}
+                color="black"
+                onPress={() => onSavePress()}
+              />
+            ) : null}
           </View>
         </View>
       </View>
       <View>
-     
         <FlatList
           data={labelData}
           renderItem={({item, index}) => (
-            <TouchableOpacity onPress={{}}>
-             <LabelView/>
-             <LabelCard {...item} />
+            <TouchableOpacity onPress={() => {}}>
+              <LabelCard {...item} />
+           
             </TouchableOpacity>
           )}
           keyExtractor={item => item.labelId}
           key={item => item.labelId}
         />
+      
       </View>
+      
     </View>
   );
 };
@@ -121,8 +134,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     paddingLeft: 20,
     color: COLOR.DASHBOARDSCREEN_TOP_TEXT,
-  
-  
 
     //alignItems: 'flex-start',
   },
@@ -154,15 +165,13 @@ const styles = StyleSheet.create({
   inputtext: {
     fontSize: 20,
     paddingLeft: 60,
-  
-    
   },
   doneIcon: {
     marginTop: 3,
     flex: 1,
     marginLeft: 70,
     color: COLOR.DASHBOARDSCREEN_TOP_TEXT,
-      paddingTop:10,
+    paddingTop: 10,
   },
 });
 

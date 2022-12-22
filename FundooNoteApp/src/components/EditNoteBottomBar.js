@@ -5,8 +5,10 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import ChipCard from './Labels/ChipCard';
 
-const EditNoteBottomBar = ({deleteData, setDeleteData}) => {
+
+const EditNoteBottomBar = ({deleteData, setDeleteData,navigation}) => {
   const [modalVisible, setModalVisible] = useState(false);
 
   return (
@@ -49,7 +51,7 @@ const EditNoteBottomBar = ({deleteData, setDeleteData}) => {
                 <Text style={styles.del}> Delete</Text>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => {}}>
+            <TouchableOpacity onPress={() => navigation.navigate(ChipCard)}>
             <View style={{flexDirection: 'row',paddingTop:20}}>
                 <MaterialIcons name="label-outline" size={22}  />
                 <Text style={styles.del}> Label</Text>
